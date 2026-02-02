@@ -9,8 +9,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/expense")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/expenses")
+@CrossOrigin(origins = "*", allowedHeaders = "*") // Allow all origins for now
 public class ExpenseController {
 
     @Autowired
