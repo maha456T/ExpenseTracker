@@ -1,3 +1,4 @@
+# Use official Java 17 image
 FROM eclipse-temurin:17-jdk-alpine
 
 # Set working directory
@@ -6,6 +7,9 @@ WORKDIR /app
 # Copy Maven wrapper and pom.xml
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
+
+# FIX: Add execute permission to mvnw
+RUN chmod +x mvnw
 
 # Download dependencies (cached layer)
 RUN ./mvnw dependency:go-offline
@@ -20,4 +24,4 @@ RUN ./mvnw clean package -DskipTests
 EXPOSE 8080
 
 # Run the application
-CMD ["java", "-jar", "target/artifactId-version.jar"]
+CMD ["java", "-Dserver.port=${PORT:-8080}", "-jar", "target/expensetracker-0.0.1-SNAPSHOT.jar"]
